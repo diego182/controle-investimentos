@@ -15,23 +15,19 @@ namespace App\Config;
  */
 interface ConfigInterface
 {
-
-    /**
-     * Load a new config from given configuration
-     *
-     * @param string|null $name
-     *
-     * @return void
-     */
-    public function load(string $name = null): void;
-
     /**
      * Method to return a config key
      *
      * @param string $key The key that should be get
      * @param mixed $default
      *
-     * @return array|string|null
+     * @return mixed
      */
     public function get(string $key = null, $default = null);
+
+    /**
+     * @param string $key
+     * @param $value
+     */
+    public function set(string $key, $value);
 }

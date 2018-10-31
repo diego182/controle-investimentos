@@ -35,10 +35,21 @@ class Config
      */
     private function loadDriver(string $config, string $driver)
     {
-        $this->driver = new $driver($config);
-        if (!$this->driver instanceof ConfigInterface) {
-            throw new InvalidConfigDriverException();
-        }
+        $arr = [
+            'db' => [
+                'name' => 'mariadb',
+                'pass' => 'sambal01'
+            ]
+        ];
+        $arraycomascoisas = new FileLoader($config);
+        $config = new ConfigImpl($arraycomascoisas);
+        $config = $loader->load();
+//        $config = new DotNotationAccess($config);
+//        $config = new LogConfigAccess(
+//            $config
+//        );
+
+        $value = $config->get('db.pass');
     }
 
     /**
@@ -48,7 +59,7 @@ class Config
      * @return \App\Config\Config
      * @throws \App\Config\InvalidConfigDriverException
      */
-    public static function getInstance(string $config = 'config', string $driver = FileDriver::class): self
+    public static function getInstance(string $config = 'config', string $driver = ConfigImpl::class): self
     {
         if (self::$instance === null) {
             self::$instance = new Config($config, $driver);
